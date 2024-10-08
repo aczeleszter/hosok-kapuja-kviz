@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hősök Kapuja Kvíz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .answers {
+            list-style-type: none;
+            padding: 0;
+        }
+        .answers li {
+            margin-bottom: 10px;
+        }
+        .answers input {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Hősök Kapuja Kvíz</h1>
+        <form id="quizForm">
+            <div class="question" data-correct="neoromán">
+                <p>Milyen stílusban épült a Hősök kapuja?</p>
+                <ul class="answers">
+                    <li><input type="radio" id="q1a1" name="question1" value="gótikus">Gótikus</li>
+                    <li><input type="radio" id="q1a2" name="question1" value="neoromán">Neoromán</li>
+                    <li><input type="radio" id="q1a3" name="question1" value="barokk">Barokk</li>
+                </ul>
+            </div>
+            <div class="question" data-correct="Pogány Móric">
+                <p>Ki tervezte?</p>
+                <ul class="answers">
+                    <li><input type="radio" id="q2a1" name="question2" value="Lechner Ödön">Lechner Ödön</li>
+                    <li><input type="radio" id="q2a2" name="question2" value="Pogány Móric">Pogány Móric</li>
+                    <li><input type="radio" id="q2a3" name="question2" value="Ybl Miklós">Ybl Miklós</li>
+                </ul>
+            </div>
+            <div class="question" data-correct="Aba-Novák Vilmos">
+                <p>A freskókat ki festette?</p>
+                <ul class="answers">
+                    <li><input type="radio" id="q3a1" name="question3" value="Székely Bertalan">Székely Bertalan</li>
+                    <li><input type="radio" id="q3a2" name="question3" value="Munkácsy Mihály">Munkácsy Mihály</li>
+                    <li><input type="radio" id="q3a3" name="question3" value="Aba-Novák Vilmos">Aba-Novák Vilmos</li>
+                </ul>
+            </div>
+            <div class="question" data-correct="Klebelsberg Kuno">
+                <p>Kitől származik a következő idézet? „Nem palotakaput akarok építeni, hanem városkaput, amely lezárja a Gizella tér nyugtalanságát… Kicsiny pénzzel, szűkös eszközökkel kell most szép dolgokat alkotni. Ezt a kaput úgy kell megcsinálni, hogy szimbóluma legyen a városnak, akár belülről az itthoniak, akár kívülről, a vasúton jövő idegenek számára…”</p>
+                <input type="text" id="q4" name="question4">
+            </div>
+            <div class="question" data-correct="MCMXXXVI">
+                <p>Mikor tervezték a kaput?</p>
+                <ul class="answers">
+                    <li><input type="radio" id="q5a1" name="question5" value="MCMXX">MCMXX</li>
+                    <li><input type="radio" id="q5a2" name="question5" value="MCMXXXVI">MCMXXXVI</li>
+                    <li><input type="radio" id="q5a3" name="question5" value="MCMXLV">MCMXLV</li>
+                </ul>
+            </div>
+        </form>
+        <button type="button" onclick="checkAnswers()">Eredmény</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function checkAnswers() {
+            var correct = 0;
+            var total = 0;
+            var questions = document.querySelectorAll('.question');
+            questions.forEach((question, index) => {
+                var correctAnswer = question.getAttribute('data-correct');
+                if (index === 3) {
+                    // Special case for the fourth question
+                    var userAnswer = document.getElementById('q4').value.toLowerCase().replace(/\s+/g, '');
+                    var correctAnswerNormalized = correctAnswer.toLowerCase().replace(/\s+/g, '');
+                    if (userAnswer.includes(correctAnswerNormalized)) {
+                        correct++;
+                    }
+                } else {
+                    var selectedAnswer = question.querySelector('input[name="question' + (index + 1) + '"]:checked');
+                    if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                        correct++;
+                    }
+                }
+                total++;
+            });
+            var resultText = "Helyes válaszok: " + correct + " / " + total;
+            document.getElementById('result').innerText = resultText;
+        }
+    </script>
+</body>
+</html>
